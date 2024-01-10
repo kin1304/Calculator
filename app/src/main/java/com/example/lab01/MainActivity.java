@@ -18,7 +18,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
     public ArrayList<Character> pheptinh;
-    public ArrayList<Integer> operator;
+    public ArrayList<Double> operator;
+
+    private boolean check_real_integer_number(double n){
+        //flag = 1 => số nguyên
+        //flag = 0 => số thực
+
+        boolean flag = true;
+        if (Math.ceil(n) != Math.floor(n)) flag = false;
+        return flag;
+    }
     private void Xuly(String s){
         TextView Tinh=findViewById(R.id.Function);
         TextView Ans=findViewById(R.id.Answer);
@@ -32,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
             Tinh.setText(txt + s);
         }
     }
-    public int TinhToan(String bt){
-        operator= new ArrayList<Integer>();
+    public Double TinhToan(String bt){
+        operator= new ArrayList<Double>();
         pheptinh = new ArrayList<Character>();
         int vt=0;
         int n=bt.length();
@@ -42,19 +51,19 @@ public class MainActivity extends AppCompatActivity {
             if(c=='+'||c=='-'||c=='x'||c=='/'){
                 String s=bt.substring(vt,i);
                 vt=i+1;
-                operator.add(Integer.parseInt(s));
+                operator.add(Double.parseDouble(s));
                 pheptinh.add(c);
             }
         }
         String s= bt.substring(vt,n);
-        operator.add(Integer.parseInt(s));
+        operator.add(Double.parseDouble(s));
         int i=0;
         while(i<pheptinh.size()){
             char c=pheptinh.get(i);
             if(c=='x'||c=='/'){
-                int s1=operator.get(i);
-                int s2=operator.get(i+1);
-                int tong;
+                Double s1=operator.get(i);
+                Double s2=operator.get(i+1);
+                Double tong;
                 if(c=='x') {tong=s1*s2;}
                 else {tong=s1/s2;}
                 operator.remove(i);
@@ -66,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         i=0;
         while(i<pheptinh.size()){
             char c= pheptinh.get(i);
-            int tong;
+            Double tong;
             if(c=='+'){
                 tong=operator.get(i)+operator.get(i+1);
             }
@@ -158,8 +167,15 @@ public class MainActivity extends AppCompatActivity {
         TextView Ans = findViewById(R.id.Answer);
         TextView Bieuthuc = findViewById(R.id.Function);
         String bt = Bieuthuc.getText().toString();
-        int tong=TinhToan(bt);
-        String s= String.valueOf(tong);
+        Double tong=TinhToan(bt);
+        String s;
+        if(check_real_integer_number(tong)) {
+            int tmp= (int) Math.ceil(tong);
+            s = String.valueOf(tmp);
+        }
+        else {
+            s=String.valueOf(tong);
+        }
         Ans.setText(s);
     }
 }
