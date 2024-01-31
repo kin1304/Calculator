@@ -2,11 +2,15 @@ package com.example.lab01;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.LinkedList;
 import java.util.ArrayList;
 
@@ -177,5 +181,45 @@ public class MainActivity extends AppCompatActivity {
             s=String.valueOf(tong);
         }
         Ans.setText(s);
+    }
+    String yes ="Yes", no= "No";
+    AlertDialog a;
+    public void btn_heart(View view) {
+        AlertDialog.Builder alert_dialog = new AlertDialog.Builder(this);
+        alert_dialog.setTitle("Question?");
+        alert_dialog.setMessage("Cho em xin về sớm nha ");
+
+        alert_dialog.setPositiveButton(yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (yes =="No"){
+                    yes = "Yes";
+                    no = "No";
+                    a.cancel();
+                    btn_heart(view);
+                }
+                else {
+                    Toast t = Toast.makeText(MainActivity.this,"Em cảm ơn cô",Toast.LENGTH_LONG);
+                    t.show();
+                }
+            }
+        });
+        alert_dialog.setNegativeButton(no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (no =="No"){
+                    yes = "No";
+                    no = "Yes";
+                    a.cancel();
+                    btn_heart(view);
+                }
+                else {
+                    Toast t = Toast.makeText(MainActivity.this,"Em cảm ơn cô",Toast.LENGTH_LONG);
+                    t.show();
+                }
+            }
+        });
+        a = alert_dialog.create();
+        a.show();
     }
 }

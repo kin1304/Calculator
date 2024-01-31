@@ -204,7 +204,9 @@
             android:backgroundTint="#FDFDFD"
             android:text="💜"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:onClick="btn_heart"
+            />
     </TableRow>
 
 </LinearLayout>
